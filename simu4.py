@@ -7,14 +7,14 @@ f=np.pi/25
 h=1
 k=50
 k1=25
-p=2
-beta0 = np.array([1,0.02])
+p=3
+beta0 = np.array([1,0.005,0.0005])
 n=500
 n_tr = 300
 n_te = n - n_tr
 
 def st(t):
-    return 10*np.sin(f*t[1])
+    return 10*signal.sawtooth(f*t[1])
 
 def m(t):
     return np.dot(t,beta0)
@@ -63,13 +63,13 @@ for i in range(len(x_te)):
 sd_l = np.zeros(shape=(n))
 sd_u = np.zeros(shape=(n))
 
-for i in range(len(x)):
-    k_i = np.array([ker(x[i],j) + np.dot(T[j],T[i]) for j in x_tr])
-    var = sd**2 + ker(x[i],x[i]) + np.dot(T[i],T[i]) - np.dot(np.matmul(C,k_i),k_i)
-    ee = np.dot(np.matmul(C,k_i),mu)
-    sd1 = 1.96*np.sqrt(var)
-    sd_l[i] = ee-sd1
-    sd_u[i] = ee+sd1
+# for i in range(len(x)):
+#     k_i = np.array([ker(x[i],j) + np.dot(T[j],T[i]) for j in x_tr])
+#     var = sd**2 + ker(x[i],x[i]) + np.dot(T[i],T[i]) - np.dot(np.matmul(C,k_i),k_i)
+#     ee = np.dot(np.matmul(C,k_i),mu)
+#     sd1 = 1.96*np.sqrt(var)
+#     sd_l[i] = ee-sd1
+#     sd_u[i] = ee+sd1
 
 
 plt.plot(x,y,label="actual curve")
